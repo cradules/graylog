@@ -1,0 +1,7 @@
+name: ../docker/docker-compose-general-example-persistent-data
+description: A generated Helm Chart for ../docker/docker-compose-general-example-persistent-data from Skippbox Kompose
+version: 0.0.1
+keywords:
+  - ../docker/docker-compose-general-example-persistent-data
+sources:
+home:

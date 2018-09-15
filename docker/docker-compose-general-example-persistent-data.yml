@@ -45,11 +45,11 @@ services:
       # Syslog TCP
       - 514:514/tcp
       # Syslog UDP
-      - 514:514/udp
+      - 513:514/udp
       # GELF TCP
       - 12201:12201/tcp
       # GELF UDP
-      - 12201:12201/udp
+      - 12200:12201/udp
 # Volumes for persisting data, see https://docs.docker.com/engine/admin/volumes/volumes/
 volumes:
   mongo_data:
