@@ -83,7 +83,20 @@ Create the new configuration directory next to the `docker-compose.yml` file and
 ```bash
 mkdir -p ./graylog/config
 cd ./graylog/config
-wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/graylog.conf
-wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/log4j2.xml
+wget https://raw.githubusercontent.com/cradules/graylog/master/misc/graylog.conf
+wget https://raw.githubusercontent.com/cradules/graylog/master/misc/log4j2.xml
 ```
 
+The newly created directory `./graylog/config/` with the custom configuration files now has to be mounted into the Graylog Docker container.
+
+This can be done by adding an entry to the [volumes](https://docs.docker.com/compose/compose-file/#volume-configuration-reference) section of the docker-compose.yml file:
+
+[General example with volume for configuration files](docker-compose-general-example-volume-conf-files.yml)
+
+### Persisting data
+
+In order to make the recorded data persistent, you can use external volumes to store all data.
+
+In case of a container restart, this will simply re-use the existing data from the former instances.
+
+Using Docker volumes for the data of MongoDB, Elasticsearch, and Graylog, the `docker-compose.yml` file looks as follows:
