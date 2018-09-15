@@ -9,7 +9,7 @@ We will use the following Docker images in this chapter:
 - MongoDB: mongo
 - Elasticsearch: docker.elastic.co/elasticsearch/elasticsearch
 
-##Quick start
+### Quick start
 
 If you simply want to checkout Graylog without any further customization, you can run the following three commands to create the necessary environment:
 ```bash
