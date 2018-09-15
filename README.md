@@ -16,7 +16,7 @@ In a minimum Graylog deployment, all three components are installed on a single 
 
 None of the components is redundant but it is easy and quick to set up.
 
-[Minimum setup] (./architect_small_setup.png)
+![minimal architecture](architec_small_setup.png)
 
 # Simple Multi-Node
 
@@ -30,7 +30,7 @@ Complex Multi-Node designs will be required for larger production environments. 
 
 The load balancer can ping the Graylog nodes via HTTP on the Graylog REST API to check if they are alive and take dead nodes out of the cluster.
 
-http://docs.graylog.org/en/2.4/_images/architec_bigger_setup.png
+![bigger architecture](architec_bigger_setup.png)
 
 # Note
 Some guides on the Graylog Marketplace also offer some ideas how you can use RabbitMQ (AMQP) or Apache Kafka to add some queueing to your setup.
@@ -163,7 +163,11 @@ Most Graylog customers retain 30-90 days online (searchable in Elasticsearch) an
 
 Many variables affect storage requirements, such as how much of each message is kept, whether the original message is retained once parsing is complete, and how much enrichment is done prior to storage.
 
-    A simple rule of thumb for planning storage is to take your average daily ingestion rate, multiply it by the number of days you need to retain the data online, and then multiply that number by 1.3 to account for metadata overhead. (GB/day x Ret. Days x 1.3 = storage req.)
+   A simple rule of thumb for planning storage is to take your average daily ingestion rate, multiply it by the number of days you need to retain the data online, and then multiply that number by 1.3 to account for metadata overhead. 
+   
+```text
+(GB/day x Ret. Days x 1.3 = storage req.)
+```
 
 Elasticsearch makes extensive use of slack storage space in the course of it’s operations. Users are strongly encouraged to exceed the minimum storage required for their calculated ingestion rate. When at maximum retention, Elasticsearch storage should not exceed 75% of total space.
 
