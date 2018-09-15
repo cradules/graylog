@@ -70,4 +70,4 @@ Every configuration option can be set via [environment variables](/misc/graylog.
 
 For example, setting up the SMTP configuration for sending Graylog alert notifications via email, the `docker-compose.yml` would look like this:
 
-[Docker compose with SMPT](docker-compose-general-example-smtp.yml)
+[Docker compose with SMPT](docker-compose-general-example-smtp.yml){:target="_blank"}
