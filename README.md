@@ -174,4 +174,4 @@ Elasticsearch makes extensive use of slack storage space in the course of it’s
 # Download & Install Graylog
 
 # Containers
-Graylog supports Docker for deployment of Graylog, MongoDB and Elasticsearch. Installation and configuration instructions may be found on the Docker installation page.
+Graylog supports Docker for deployment of Graylog, MongoDB and Elasticsearch. Installation and configuration instructions may be found on the [Docker installation page](docker).
