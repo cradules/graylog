@@ -2,8 +2,8 @@
 
 Disclaimer
 
-The documentation is build with the help of the official Documeantion that can be found on 
-http://docs.graylog.org/en/2.4/index.html
+The documentation is build with the help of the [official Documeantion](http://docs.graylog.org/en/2.4/index.html) that can be found on 
+
 
 This repo is covering the steps for planing and installing Graylog Log Monitoring System as docker and kubernetes
 
@@ -16,7 +16,7 @@ In a minimum Graylog deployment, all three components are installed on a single 
 
 None of the components is redundant but it is easy and quick to set up.
 
-http://docs.graylog.org/en/2.4/_images/architec_small_setup.png
+[Minimum setup] (./architect_small_setup.png)
 
 # Simple Multi-Node
 
