@@ -100,3 +100,82 @@ In order to make the recorded data persistent, you can use external volumes to s
 In case of a container restart, this will simply re-use the existing data from the former instances.
 
 Using Docker volumes for the data of MongoDB, Elasticsearch, and Graylog, the `docker-compose.yml` file looks as follows:
+
+[General example with persistent data](docker-compose-persistent-data.yml)
+
+### Plugins
+
+In order to add plugins you can build a new image based on the existing [graylog/graylog](https://hub.docker.com/r/graylog/graylog/) Docker image with the needed plugin included or you add a volume that points to the locally downloaded plugin file.
+
+### New Docker image
+
+Simply create a new [Dockerfile](https://docs.docker.com/engine/reference/builder/) in an empty directory with the following contents:
+
+```text
+FROM graylog/graylog:2.4.0-1
+RUN wget -O /usr/share/graylog/plugin/graylog-plugin-auth-sso-2.4.0.jar https://github.com/Graylog2/graylog-plugin-auth-sso/releases/download/2.4.0/graylog-plugin-auth-sso-2.4.0.ja
+```
+Build a new image from the new Dockerfile (also see [docker build](https://docs.docker.com/engine/reference/commandline/build/)):
+
+```bash
+docker build -t graylog-with-sso-plugin .
+```
+
+In this example, we created a new image with the [SSO plugin](https://github.com/Graylog2/graylog-plugin-auth-sso) installed. From now on reference to the newly built image instead of [graylog/graylog](https://hub.docker.com/r/graylog/graylog/).
+
+The `docker-compose.yml` file has to reference the new Docker image:
+```yaml
+version: '2'
+services:
+  mongo:
+    image: "mongo:3"
+    # Other settings [...]
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+    # Other settings [...]
+  graylog:
+    image: graylog-with-sso-plugin
+    # Other settings [...]
+```
+
+### Volume-mounted plugin
+Instead of building a new docker image, you can also add additional plugins by mounting them directly and individually into the plugin folder of the original Docker image. This way, you don’t have to create a new docker image every time you want to add a new plugin (or remove an old one).
+
+Simply create a plugin folder, download the plugin(s) you want to install into it and mount each file as an additional volume into the docker container:
+
+```bash
+mkdir -p ./graylog/plugin
+wget -O ./graylog/plugin/graylog-plugin-auth-sso-2.3.0.jar https://github.com/Graylog2/graylog-plugin-auth-sso/releases/download/2.3.0/graylog-plugin-auth-sso-2.3.0.jar
+```
+
+The `docker-compose.yml` file has to reference the new Docker image:
+```yaml
+version: '2'
+services:
+  mongo:
+    image: "mongo:3"
+    # Other settings [...]
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+    # Other settings [...]
+  graylog:
+    image: graylog/graylog:2.3.0-1
+    # Other settings [...]
+    volumes:
+      # Mount local plugin file into Docker container
+      - ./graylog/plugin/graylog-plugin-auth-sso-2.3.0.jar:/usr/share/graylog/plugin/graylog-plugin-auth-sso-2.3.0.jar
+```
+You can add as many of these links as you wish in your `docker-compose.yml` file. Simply restart the container and docker will recreate the graylog container with the new volumes included:
+```bash
+docker-compose restart
+```
+
+### Troubleshooting
+
+In case you see warnings regarding open file limit, try to set ulimit from the outside of the container:
+
+```bash
+docker run --ulimit nofile=64000:64000 ...
+```
+
+The `devicemapper` storage driver can produce problems with Graylogs disk journal on some systems. In this case please pick another driver like `aufs` or `overlay`.
