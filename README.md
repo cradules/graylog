@@ -2,7 +2,7 @@
 
 Disclaimer
 
-The documentation is build with the help of the [official Documeantion](http://docs.graylog.org/en/2.4/index.html) that can be found on 
+The documentation is build with the help of the [official Documeantion](http://docs.graylog.org/en/2.4/index.html) 
 
 
 This repo is covering the steps for planing and installing Graylog Log Monitoring System as docker and kubernetes
