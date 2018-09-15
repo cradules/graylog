@@ -1,7 +1,7 @@
 # Docker
 
 ## Requirements
-You will need a fairly recent version of Docker (https://docs.docker.com/install/)
+You will need a fairly recent version of [Docker](https://docs.docker.com/install/)
 
 We will use the following Docker images in this chapter:
 
@@ -101,7 +101,7 @@ In case of a container restart, this will simply re-use the existing data from t
 
 Using Docker volumes for the data of MongoDB, Elasticsearch, and Graylog, the `docker-compose.yml` file looks as follows:
 
-[General example with persistent data](docker-compose-persistent-data.yml)
+[General example with persistent data](docker-compose-general-example-persistent-data.yml)
 
 ### Plugins
 
