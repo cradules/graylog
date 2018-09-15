@@ -37,10 +37,10 @@ services:
       # Graylog web interface and REST API
       - 9000:9000
       # Syslog TCP
-      - 514:514
+      - 514:514/tcp
       # Syslog UDP
       - 514:514/udp
       # GELF TCP
-      - 12201:12201
+      - 12201:12201/tcp
       # GELF UDP
       - 12201:12201/udp
