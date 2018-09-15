@@ -60,8 +60,8 @@ echo -n yourpassword | shasum -a 256
 
 All these settings and command line parameters can be put in a ```docker-compose.yml``` file, so that they don’t have to be executed one after the other.
 
-Example:
-[Docker Compose](docker-compose-general-example.yml)
+
+[General Example](docker-compose-general-example.yml)
 
 After starting all three Docker containers by running docker-compose up, you can open the URL ```http://127.0.0.1:9000``` in a web browser and log in with ```username admin``` and ```password admin``` (make sure to change the password later).
 
@@ -70,4 +70,20 @@ Every configuration option can be set via [environment variables](/misc/graylog.
 
 For example, setting up the SMTP configuration for sending Graylog alert notifications via email, the `docker-compose.yml` would look like this:
 
-[Docker compose with SMPT](docker-compose-general-example-smtp.yml)
+[General Example with SMPT](docker-compose-general-example-smtp.yml)
+
+Another option would be to store the configuration file outside of the container and edit it directly.
+
+### Custom configuration files
+Instead of using a long list of environment variables to configure Graylog (see [Configuration](/misc/graylog.conf)), you can also overwrite the bundled Graylog configuration files.
+
+The bundled configuration files are stored in `/usr/share/graylog/data/config/` inside the Docker container.
+Create the new configuration directory next to the `docker-compose.yml` file and copy the default files from GitHub:
+
+```bash
+mkdir -p ./graylog/config
+cd ./graylog/config
+wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/graylog.conf
+wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/log4j2.xml
+```
+

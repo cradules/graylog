@@ -16,7 +16,7 @@ In a minimum Graylog deployment, all three components are installed on a single 
 
 None of the components is redundant but it is easy and quick to set up.
 
-![minimal architecture](architec_small_setup.png)
+![minimal architecture](misc/architec_small_setup.png)
 
 # Simple Multi-Node
 
@@ -30,7 +30,7 @@ Complex Multi-Node designs will be required for larger production environments. 
 
 The load balancer can ping the Graylog nodes via HTTP on the Graylog REST API to check if they are alive and take dead nodes out of the cluster.
 
-![bigger architecture](architec_bigger_setup.png)
+![bigger architecture](misc/architec_bigger_setup.png)
 
 # Note
 Some guides on the Graylog Marketplace also offer some ideas how you can use RabbitMQ (AMQP) or Apache Kafka to add some queueing to your setup.
