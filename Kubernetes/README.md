@@ -74,7 +74,7 @@ INFO chart created in "./../docker/docker-compose-general-example-persistent-dat
 ```bash
 helm init
 ```
-- Install services
+- Install services using helm
 ```bash
 helm install ./docker-compose-general-example-persistent-data/
 NAME:   invisible-cat
@@ -102,6 +102,102 @@ graylog        0s
 mongodb        0s
 
 ==> v1beta1/Deployment
+elasticsearch  0s
+graylog        0s
+mongodb        0s
+
+```
+### Create helm package and save them on git repo
+- Create a new repo on git helm-repo
+- Clone helm-repo 
+```bash
+git clone https://github.com/cradules/helm-repo.git
+```
+- Create a folder named graylog in root path of helm-repo
+- Copy the content of the helm chart to the new created folder
+```bash
+ rsync -aP../graylog/helm/docker-compose-general-example-persistent-data/ ./graylog/
+```
+
+- Edit the chart to correspond to the new location
+```yaml
+name: graylog
+description: A generated Helm Chart for graylog from Skippbox Kompose
+version: 0.0.1
+keywords:
+  - graylog
+sources:
+home:
+```
+ - Create package 
+ ```bash
+ helm package graylog/
+ Successfully packaged chart and saved it to: /mnt/e/Projects/helm-repo/graylog-0.0.1.tgz
+```
+- Delete the chart directory for a clean repo
+```bash
+ rm -rf graylog/
+```
+- Create helm repo index
+```bash
+helm repo index .
+```
+- Add file to git, commit and push them
+- Add new help repo to you kubernetes cluster:
+```bash
+ helm repo add git 'https://raw.githubusercontent.com/cradules/helm-repo/master/'
+"git" has been added to your repositories\
+
+helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "git" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+ 
+helm repo list
+NAME    URL
+stable  https://kubernetes-charts.storage.googleapis.com
+local   http://127.0.0.1:8879/charts
+git     https://raw.githubusercontent.com/cradules/helm-repo/master/
+
+helm search graylog
+NAME            CHART VERSION   APP VERSION     DESCRIPTION
+git/graylog     0.0.1                           A generated Helm Chart for graylog from Skippbox Kompose
+local/graylog   0.0.1                           A generated Helm Chart for graylog from Skippbox Kompose
+
+```
+- Install graylog via helm
+
+```bash
+ helm install git/graylog
+NAME:   ignorant-kudu
+LAST DEPLOYED: Sat Sep 15 22:36:36 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1beta1/Deployment
+NAME           AGE
+elasticsearch  0s
+graylog        0s
+mongodb        0s
+
+==> v1/Pod(related)
+
+NAME                            READY  STATUS   RESTARTS  AGE
+elasticsearch-68c9dc8d64-kzsj9  0/1    Pending  0         0s
+graylog-5576d986d4-lwxwz        0/1    Pending  0         0s
+mongodb-85fbc84cf5-w5j94        0/1    Pending  0         0s
+
+==> v1/PersistentVolumeClaim
+
+NAME                    AGE
+docker-es-data          0s
+docker-graylog-journal  0s
+docker-mongo-data       0s
+
+==> v1/Service
 elasticsearch  0s
 graylog        0s
 mongodb        0s
