@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: graylog
+  annotations:
+    kompose.cmd: kompose -f docker-compose-metallb.yml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: graylog
+spec:
+  ports:
+  - name: "9000"
+    port: 9000
+    targetPort: 9000
+  - name: "514"
+    port: 514
+    targetPort: 514
+  - name: "12201"
+    port: 12201
+    targetPort: 12201
+  selector:
+    io.kompose.service: graylog
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+status:
+  loadBalancer: {}
